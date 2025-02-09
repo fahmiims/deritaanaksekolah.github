@@ -4,78 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catatan Gula Darah</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <style>
-        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: #fff;
+            background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1500&q=80') no-repeat center center fixed;
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             padding: 20px;
+            color: #fff;
         }
 
         .container {
             background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
+            padding: 40px 30px;
             width: 100%;
             max-width: 500px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(15px);
-            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1.2s ease;
         }
 
         h1 {
-            color: #fff;
-            font-size: 32px;
+            font-size: 36px;
             margin-bottom: 30px;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #f12711, #f5af19);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        label {
-            margin-top: 10px;
-            display: block;
-            color: #fff;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        input, select, button {
-            margin-bottom: 15px;
-            padding: 12px;
-            width: 100%;
-            max-width: 300px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
+        form label {
+            margin-bottom: 8px;
             font-size: 16px;
+            font-weight: 600;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            height: 45px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #f12711;
+            box-shadow: 0 0 8px rgba(255, 75, 43, 0.8);
+            outline: none;
+        }
+
+        input::placeholder {
+            color: #ffffff;
         }
 
         button {
-            background-color: #4CAF50;
-            color: white;
+            width: 100%;
+            height: 50px;
+            font-size: 18px;
+            font-weight: bold;
             border: none;
+            border-radius: 15px;
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: rgb(255, 255, 255);
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         button:hover {
-            background-color: #45a049;
-            transform: scale(1.05);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 75, 43, 0.4);
         }
 
         button:active {
-            transform: scale(1);
+            transform: translateY(0);
         }
 
-        /* Responsiveness */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        option {
+            background-color: #000;
+            color: #fff;
+            font-weight: bold;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -110,49 +146,35 @@
             </select>
 
             <label for="gula_darah">Gula Darah (mg/dL):</label>
-            <input type="number" id="gula_darah" name="gula_darah" required>
+            <input type="number" id="gula_darah" name="gula_darah" required placeholder="Masukkan nilai gula darah">
 
             <button type="submit">Simpan</button>
         </form>
     </div>
 
     <script>
-        // Set tanggal otomatis saat halaman dimuat
         window.onload = function() {
             var today = new Date();
             var day = String(today.getDate()).padStart(2, '0');
-            var month = String(today.getMonth() + 1).padStart(2, '0'); // Bulan mulai dari 0
+            var month = String(today.getMonth() + 1).padStart(2, '0');
             var year = today.getFullYear();
-            var fullDate = year + '-' + month + '-' + day;
-
-            // Mengatur nilai default untuk input tanggal
-            document.getElementById("tanggal").value = fullDate;
+            document.getElementById("tanggal").value = `${year}-${month}-${day}`;
         };
 
         document.getElementById("gulaDarahForm").addEventListener("submit", function(e) {
-            e.preventDefault(); // Mencegah form agar tidak refresh halaman
-
+            e.preventDefault();
             var tanggal = document.getElementById("tanggal").value;
             var waktu = document.getElementById("waktu").value;
             var gulaDarah = document.getElementById("gula_darah").value;
 
-            // Menampilkan data yang dikirim untuk debugging
             console.log("Data yang dikirim:", { tanggal, waktu, gulaDarah });
 
-            // Membuat URL untuk Google Apps Script (Web App)
-            var url = "https://script.google.com/macros/s/AKfycbzQcRYLZ0JTVRETzqfBaxRUt1quEqUaQX2TRU0tI_ZHiL8EIGZNnkEy-AWDddTf6EuvSw/exec"; // Ganti dengan URL Web App kamu
+            var url = "https://script.google.com/macros/s/AKfycbzQcRYLZ0JTVRETzqfBaxRUt1quEqUaQX2TRU0tI_ZHiL8EIGZNnkEy-AWDddTf6EuvSw/exec";
 
-            // Mengirimkan data ke Google Sheets menggunakan fetch
             fetch(url, {
                 method: "POST",
-                body: new URLSearchParams({
-                    "tanggal": tanggal,
-                    "waktu": waktu,
-                    "gula_darah": gulaDarah
-                }),
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
+                body: new URLSearchParams({ "tanggal": tanggal, "waktu": waktu, "gula_darah": gulaDarah }),
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
             })
             .then(response => response.text())
             .then(data => {
